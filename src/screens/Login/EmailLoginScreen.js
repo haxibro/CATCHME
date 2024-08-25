@@ -1,10 +1,14 @@
+//이메일로 시작하기
+
 import React, { useState, useRef } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import 'react-native-gesture-handler';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Alert, Switch } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { API_BASE_URL } from '../../config/config';
+import { Keyboard } from 'react-native';
 
 function EmailLoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -76,6 +80,7 @@ function EmailLoginScreen({ navigation }) {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> 
     <KeyboardAvoidingView behavior={'height'} style={styles.container}>
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
@@ -141,6 +146,7 @@ function EmailLoginScreen({ navigation }) {
       </View>
       <View style={{ flex: 2 }} />
     </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

@@ -1,3 +1,6 @@
+// GPS 로 사용자 위치 받고 => 병원 검색하는 페이지
+
+
 import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import { SafeAreaView, ActivityIndicator, PermissionsAndroid, Platform, FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
@@ -33,7 +36,6 @@ function TesttScreen() {
       }
       getLocation();
     };
-
 
     //위치 정보 얻기!! 경도/위도 값
     const getLocation = () => {
@@ -78,7 +80,6 @@ function TesttScreen() {
     requestLocationPermission();
   }, []);
 
-
   const searchHospitalsNearby = async (latitude, longitude, query) => {
     const radius = 5000;
 
@@ -93,6 +94,7 @@ function TesttScreen() {
       );
 
       const data = await response.json();
+      console.log(data.documents[0]);
       return data.documents; // 병원 목록
     } catch (error) {
       console.error(error);
@@ -100,8 +102,7 @@ function TesttScreen() {
     }
   };
 
-
-  //거리 계산 용도
+  // 거리 계산 용도
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
     const R = 6371; // Radius of the Earth in km
@@ -115,12 +116,14 @@ function TesttScreen() {
     return R * c; // Distance in km
   };
 
-  const handleHospitalClick = (placeUrl) => {
-    setMapUrl(placeUrl); // 클릭한 병원의 URL을 설정
+  const handleHospitalClick = (hospital) => {
+    const { x, y, place_name } = hospital;
+    const mapUrl = `https://map.kakao.com/?urlX=${x}&urlY=${y}&urlLevel=3&markerCoords=${y},${x}&markerText=${encodeURIComponent(place_name)}`;
+    setMapUrl(mapUrl); // 클릭한 병원의 URL을 설정
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleHospitalClick(item.place_url)}>
+    <TouchableOpacity onPress={() => handleHospitalClick(item)}>
       <View style={styles.item}>
         <Text style={styles.title}>{item.place_name}</Text>
         <Text>{item.address_name}</Text>
@@ -135,24 +138,23 @@ function TesttScreen() {
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <>
-          {mapUrl ? (
+          <View style={styles.webviewContainer}>
             <WebView
               originWhitelist={['*']}
-              source={{ uri: mapUrl }} // 여기가 웹뷰 띄우는 부분인데 여기가 문제가 나
+              source={{ uri: mapUrl }}
               style={styles.webview}
               javaScriptEnabled={true}
               onLoadEnd={() => console.log("WebView has finished loading")}
               onError={(error) => console.error("WebView error: ", error)}
               startInLoadingState={true}
             />
-          ) : (
-            <FlatList
-              data={hospitals}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              style={styles.list}
-            />
-          )}
+          </View>
+          <FlatList
+            data={hospitals}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.list}
+          />
         </>
       )}
     </SafeAreaView>
@@ -163,11 +165,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  webviewContainer: {
+    flex: 1,
+  },
   webview: {
-    flex: 1, // 지도는 전체 화면을 차지하도록 설정
+    flex: 1,
   },
   list: {
-    flex: 1, // 목록은 전체 화면을 차지하도록 설정
+    flex: 1,
     margin: 10,
   },
   item: {

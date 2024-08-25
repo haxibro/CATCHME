@@ -1,3 +1,5 @@
+//비밀번호 변경
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet,TouchableWithoutFeedback,Keyboard } from 'react-native';
 import axios from 'axios';

@@ -1,3 +1,5 @@
+//사용자 정보 수정
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ActivityIndicator } from 'react-native';

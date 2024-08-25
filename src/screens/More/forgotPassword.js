@@ -1,8 +1,10 @@
+// 비밀번호 찾기 PAGE
+
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config/config';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -90,14 +92,15 @@ function ForgotPassword() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+        <Text style={{fontSize:30, fontWeight:'bold',marginBottom:50}} >비밀번호를 잊으셨나요?</Text>
         <TextInput
           style={styles.input}
-          placeholder="이메일"
+          placeholder="이메일(ID)"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
         />
-        <Button title="코드 전송" onPress={sendVerificationCode} />
+        <Button title="코드 전송" onPress={sendVerificationCode} style={styles.btn} />
         <TextInput
           style={styles.input}
           placeholder="인증 코드"
@@ -105,7 +108,7 @@ function ForgotPassword() {
           onChangeText={setCode}
           keyboardType="numeric"
         />
-        <Button title="인증" onPress={verifyCode} />
+        <Button title="인증" onPress={verifyCode} style={styles.btn} />
         {isVerified && !isFetchingPassword && (
           <Button title="임시 비밀번호 요청" onPress={fetchTemporaryPassword} />
         )}
@@ -129,11 +132,35 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingHorizontal: 8,
   },
   tempPasswordContainer: {
     marginTop: 20,
+  },
+  btnArea: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: hp(1.5),
+    marginBottom:30
+  },
+  btn: {
+    width: 183, // 버튼 너비 설정
+    height: 45, // 버튼 높이 설정
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    marginTop:10,
+  },
+  btnoutline: {
+    width: 183, // 버튼 너비 설정
+    height: 45, // 버튼 높이 설정
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
   },
 });
 
