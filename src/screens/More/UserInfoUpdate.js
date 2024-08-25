@@ -1,4 +1,4 @@
-//사용자 정보 수정
+//사용자 정보 수정/업데이트
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
