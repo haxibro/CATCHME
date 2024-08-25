@@ -1,4 +1,5 @@
 //비밀번호 변경
+// 유효성 검사 규칙 추가해야할듯
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet,TouchableWithoutFeedback,Keyboard } from 'react-native';
