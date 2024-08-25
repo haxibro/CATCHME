@@ -1,4 +1,4 @@
-// 비밀번호 찾기 PAGE
+// 비밀번호 찾기 PAGE.
 
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
