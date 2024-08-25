@@ -1,4 +1,4 @@
-//이메일로 시작하기
+//이메일로 시작하기.
 
 import React, { useState, useRef } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
