@@ -1,3 +1,5 @@
+//More 첫 페이지 리스트 쫘라락 나오는 페이지
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, SectionList, Switch, StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
